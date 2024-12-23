@@ -11,7 +11,7 @@ const server = http.createServer((req, res) => {
     } else if (req.url === '/main.js') {
         serveFile('public/main.js', 'application/javascript', res);
     } else if (req.url === '/default-content') {
-        serveFile('test/test-files.json', 'application/json', res);
+        serveFile('public/test-files.json', 'application/json', res);
     } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('Not Found');
