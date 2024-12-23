@@ -1,5 +1,19 @@
 let fileContents = [];
 
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/default-content')
+        .then(response => response.json())
+        .then(data => {
+            fileContents = data.contents;
+            console.log('Loaded default files:', fileContents.length);
+            window.currentIndex = 0;
+            displayCurrentPair();
+        })
+        .catch(err => {
+            console.error('Error loading default content:', err);
+        });
+});
+
 document.getElementById('jsonSelector').addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (file) {
