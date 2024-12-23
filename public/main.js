@@ -1,7 +1,7 @@
 let fileContents = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('/default-content')
+    fetch('/default-content.json')
         .then(response => response.json())
         .then(data => {
             fileContents = data.contents;
