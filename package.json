@@ -1,0 +1,22 @@
+{
+  "name": "file-diff-viewer",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon"
+  },
+  "dependencies": {
+    "diff": "^5.1.0",
+    "http": "0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "nodemonConfig": {
+    "watch": ["src/*.js"],
+    "ignore": ["node_modules"],
+    "exec": "node --inspect src/server.js"
+  }
+}

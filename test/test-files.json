@@ -1,0 +1,24 @@
+{
+    "contents": [
+        {
+            "file_name": "getImageIcon_v1.java",
+            "desc": "Original implementation: Simple URL-to-ImageIcon conversion with basic error handling",
+            "code": "public static ImageIcon getImageIcon(String path)\n{\n    java.net.URL imgURL = GuiImporter.class.getResource(path);\n    if (imgURL != null)\n    {\n        return new ImageIcon(imgURL);\n    }\n    else\n    {\n        log.error(\"Couldn't find icon: \" + imgURL);\n    }\n    return null;\n}"
+        },
+        {
+            "file_name": "getImageIcon_v2.java",
+            "desc": "Enhanced version: Added input validation, improved error messages, and restructured control flow for better readability",
+            "code": "public static ImageIcon getImageIcon(String path)\n{\n    if (path == null)\n    {\n        log.error(\"Icon path is null\");\n        return null;\n    }\n\n    java.net.URL imgURL = GuiImporter.class.getResource(path);\n\n    if (imgURL == null)\n    {\n        log.error(\"Couldn't find icon: \" + imgURL);\n        return null;\n    }\n    else\n        return new ImageIcon(imgURL);\n}"
+        },
+        {
+            "file_name": "example1.js",
+            "desc": "Basic implementation: Simple addition function without type checking or validation",
+            "code": "function add(a, b) {\n    return a + b;\n}"
+        },
+        {
+            "file_name": "example2.js",
+            "desc": "Improved version: Added type checking for numeric arguments to prevent unexpected concatenation or NaN results",
+            "code": "function add(a, b) {\n    if (typeof a !== 'number' || typeof b !== 'number') {\n        throw new Error('Arguments must be numbers');\n    }\n    return a + b;\n}"
+        }
+    ]
+}
