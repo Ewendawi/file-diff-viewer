@@ -175,3 +175,31 @@ button:disabled {
     align-items: center;
     line-height: 1.4;
 }
+
+#oneColumnView .diff-column {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#oneColumnView .column-header {
+    background: #eee;
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#oneColumnView .diff-content {
+    margin: 0;
+    padding: 10px;
+    background-color: #fff;
+    white-space: pre-wrap;
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: monospace;
+    position: relative;
+}

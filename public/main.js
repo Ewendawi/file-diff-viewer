@@ -39,29 +39,70 @@ document.getElementById('loadJson').addEventListener('click', () => {
     }
     
     window.currentIndex = 0;
-    displayCurrentPair();
+    if (twoColumnView.style.display !== 'none') {
+        displayCurrentPair();
+    } else {
+        displayCurrentFile();
+    }
 });
 
 document.getElementById('nextPair').addEventListener('click', () => {
-    if (window.currentIndex < fileContents.length - 2) {
-        window.currentIndex++;
-        displayCurrentPair();
+    const twoColumnView = document.getElementById('twoColumnView');
+    if (twoColumnView.style.display !== 'none') {
+        if (window.currentIndex < fileContents.length - 2) {
+            window.currentIndex++;
+            displayCurrentPair();
+        }
+    } else {
+        if (window.currentIndex < fileContents.length - 1) {
+            window.currentIndex++;
+            displayCurrentFile();
+        }
     }
 });
 
 document.getElementById('prevPair').addEventListener('click', () => {
-    if (window.currentIndex > 0) {
-        window.currentIndex--;
-        displayCurrentPair();
+    const twoColumnView = document.getElementById('twoColumnView');
+    if (twoColumnView.style.display !== 'none') {
+        if (window.currentIndex > 0) {
+            window.currentIndex--;
+            displayCurrentPair();
+        }
+    } else {
+        if (window.currentIndex > 0) {
+            window.currentIndex--;
+            displayCurrentFile();
+        }
     }
+});
+
+document.getElementById('toggleView').addEventListener('click', () => {
+    const twoColumnView = document.getElementById('twoColumnView');
+    const oneColumnView = document.getElementById('oneColumnView');
+    if (twoColumnView.style.display === 'none') {
+        twoColumnView.style.display = 'flex';
+        oneColumnView.style.display = 'none';
+        displayCurrentPair();
+    } else {
+        twoColumnView.style.display = 'none';
+        oneColumnView.style.display = 'flex';
+        displayCurrentFile();
+    }
+    updateNavigationButtons();
 });
 
 function updateNavigationButtons() {
     const prevButton = document.getElementById('prevPair');
     const nextButton = document.getElementById('nextPair');
+    const twoColumnView = document.getElementById('twoColumnView');
     
-    prevButton.disabled = !fileContents.length || window.currentIndex === 0;
-    nextButton.disabled = !fileContents.length || window.currentIndex >= fileContents.length - 2;
+    if (twoColumnView.style.display !== 'none') {
+        prevButton.disabled = !fileContents.length || window.currentIndex === 0;
+        nextButton.disabled = !fileContents.length || window.currentIndex >= fileContents.length - 2;
+    } else {
+        prevButton.disabled = !fileContents.length || window.currentIndex === 0;
+        nextButton.disabled = !fileContents.length || window.currentIndex >= fileContents.length - 1;
+    }
 }
 
 function displayCurrentPair() {
@@ -73,6 +114,17 @@ function displayCurrentPair() {
     document.getElementById('file1Desc').textContent = file1.desc;
     document.getElementById('file2Desc').textContent = file2.desc;
     compareContents(file1.code, file2.code);
+    updateNavigationButtons();
+}
+
+function displayCurrentFile() {
+    const file = fileContents[window.currentIndex];
+    document.getElementById('fileHeader').textContent = file.file_name;
+    document.getElementById('fileDesc').textContent = file.desc;
+    const fileOutput = document.getElementById('fileOutput');
+    fileOutput.textContent = file.code;
+    fileOutput.className = `language-${getFileLanguage(file.file_name)}`;
+    Prism.highlightElement(fileOutput);
     updateNavigationButtons();
 }
 
@@ -90,8 +142,8 @@ function displayDiff(content1, content2) {
     );
 
     const changes = Diff.parsePatch(diff)[0].hunks;
-    const file1Output = document.getElementById('file1Output');
-    const file2Output = document.getElementById('file2Output');
+    const file1Output = document.getElementById('file1Output').querySelector('code');
+    const file2Output = document.getElementById('file2Output').querySelector('code');
     
     file1Output.innerHTML = '';
     file2Output.innerHTML = '';
@@ -151,10 +203,22 @@ function setupScrollSync(element1, element2) {
 function escapeHtml(str) {
     return str
         .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
+        // .replace(/<//g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
+}
+
+function getFileLanguage(fileName) {
+    const extension = fileName.split('.').pop();
+    switch (extension) {
+        case 'java':
+            return 'java';
+        case 'js':
+            return 'javascript';
+        default:
+            return 'plaintext';
+    }
 }
 
 function readFileContent(file) {
