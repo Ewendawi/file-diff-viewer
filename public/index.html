@@ -4,40 +4,157 @@
     <meta charset="UTF-8">
     <title>File Comparator</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css"> <!-- Prism CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="controls">
-        <input type="file" id="jsonSelector" accept=".json" />
-        <button id="loadJson">Load Data</button>
-        <button id="prevPair">Previous</button>
-        <button id="nextPair">Next</button>
-        <button id="toggleView">Toggle View</button> <!-- New button -->
+    <div class="filter-bar">
+        <!-- File selector and navigation controls -->
+        <div class="controls-group">
+            <input type="file" id="jsonSelector" accept=".json" />
+            <button id="prevPair">Previous</button>
+            <button id="nextPair">Next</button>
+            <span id="fileContentsCount">Files: 0</span>
+        </div>
+        
+        <!-- Filter controls -->
+        <div class="filters-group">
+            <select id="experimentFilter">
+                <option value="">Select Experiment</option>
+                <!-- Add options dynamically -->
+            </select>
+            <select id="errorTypeFilter">
+                <option value="">Select Error Type</option>
+                <!-- Add options dynamically -->
+            </select>
+            <select id="modelFilter">
+                <option value="">Select Model</option>
+                <!-- Add options dynamically -->
+            </select>
+            <select id="problemFilter">
+                <option value="">Select Problem</option>
+                <!-- Add options dynamically -->
+            </select>
+            <div class="dropdown">
+                <button id="tagsFilterButton">Select Tags</button>
+                <div id="tagsFilterMenu" class="dropdown-content">
+                    <!-- Add options dynamically -->
+                </div>
+            </div>
+            <button id="applyFilters">Apply Filters</button>
+            <button id="resetFilters">Reset Filters</button> <!-- New button -->
+        </div>
     </div>
-    <div class="diff-container" id="twoColumnView">
+    <div class="diff-container" id="twoColumnView" style="display: none;"> 
         <div class="diff-column">
-            <div class="column-header" id="file1Header">File 1</div>
-            <div class="file-description" id="file1Desc"></div>
+
+            <div class="block-title">
+                <span id="file1Header">Code</span>
+                <button class="fold-button" onclick="toggleFold('file1Output')">▼</button>
+            </div>
             <pre id="file1Output" class="diff-content"><code class="language-java"></code></pre>
+
+            <div class="block-title">
+                <span>Feedback</span>
+                <button class="fold-button" onclick="toggleFold('file1Feedback')">▼</button>
+            </div>
+            <div class="file-feedback" id="file1Feedback"></div>
+
+            <div class="block-title">
+                <span>Description</span>
+                <button class="fold-button" onclick="toggleFold('file1Desc')">▼</button>
+            </div>
+            <div class="file-description" id="file1Desc"></div>
+
+            <div class="block-title">
+                <span>Prompt</span>
+                <button class="fold-button" onclick="toggleFold('file1Prompt')">▼</button>
+            </div>
+            <div class="file-prompt" id="file1Prompt"></div>
+
+            <div class="block-title">
+                <span>Raw Response</span>
+                <button class="fold-button" onclick="toggleFold('file1RawResponse')">▼</button>
+            </div>
+            <div class="file-raw-response" id="file1RawResponse"></div>
         </div>
         <div class="diff-column">
-            <div class="column-header" id="file2Header">File 2</div>
-            <div class="file-description" id="file2Desc"></div>
+
+            <div class="block-title">
+                <span id="file2Header">Code</span>
+                <button class="fold-button" onclick="toggleFold('file2Output')">▼</button>
+            </div>
             <pre id="file2Output" class="diff-content"><code class="language-java"></code></pre>
+
+            <div class="block-title">
+                <span>Feedback</span>
+                <button class="fold-button" onclick="toggleFold('file2Feedback')">▼</button>
+            </div>
+            <div class="file-feedback" id="file2Feedback"></div>
+
+            <div class="block-title">
+                <span>Description</span>
+                <button class="fold-button" onclick="toggleFold('file2Desc')">▼</button>
+            </div>
+            <div class="file-description" id="file2Desc"></div>
+
+            <div class="block-title">
+                <span>Prompt</span>
+                <button class="fold-button" onclick="toggleFold('file2Prompt')">▼</button>
+            </div>
+            <div class="file-prompt" id="file2Prompt"></div>
+
+            <div class="block-title">
+                <span>Raw Response</span>
+                <button class="fold-button" onclick="toggleFold('file2RawResponse')">▼</button>
+            </div>
+            <div class="file-raw-response" id="file2RawResponse">
+            </div>
         </div>
     </div>
-    <div class="diff-container" id="oneColumnView" style="display: none;"> <!-- New one-column view -->
+    <div class="diff-container" id="oneColumnView"> <!-- New one-column view -->
         <div class="diff-column">
-            <div class="column-header" id="fileHeader">File</div>
-            <div class="file-description" id="fileDesc"></div>
+
+            <div class="block-title">
+                <span id="fileHeader">Code</span>
+                <button class="fold-button" onclick="toggleFold('fileOutput')">▼</button>
+            </div>
             <pre id="fileOutput" class="diff-content"><code class="language-java"></code></pre>
+
+            <div class="block-title">
+                <span>Feedback</span>
+                <button class="fold-button" onclick="toggleFold('fileFeedback')">▼</button>
+            </div>
+            <div class="file-feedback" id="fileFeedback"></div>
+
+            <div class="block-title">
+                <span>Description</span>
+                <button class="fold-button" onclick="toggleFold('fileDesc')">▼</button>
+            </div>
+            <div class="file-description" id="fileDesc"></div>
+
+            <div class="block-title">
+                <span>Prompt</span>
+                <button class="fold-button" onclick="toggleFold('filePrompt')">▼</button>
+            </div>
+            <div class="file-prompt" id="filePrompt">
+            </div>
+            <div class="block-title">
+                <span>Raw Response</span>
+                <button class="fold-button" onclick="toggleFold('fileRawResponse')">▼</button>
+            </div>
+            <div class="file-raw-response" id="fileRawResponse">
+            </div>
         </div>
     </div>
     <p>For more information on the JSON format, visit the <a href="https://github.com/Ewendawi/file-diff-viewer?tab=readme-ov-file#setup" target="_blank">documentation</a>.</p>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.1.0/diff.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script> <!-- Prism JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-java.min.js"></script> <!-- Prism Java syntax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-javascript.min.js"></script> <!-- Prism JavaScript syntax -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-java.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-javascript.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js"></script> 
     <script src="main.js"></script>
 </body>
 </html>

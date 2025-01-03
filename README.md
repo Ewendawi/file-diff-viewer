@@ -1,6 +1,20 @@
+
 # File Comparator
 
-A web-based tool for comparing file versions using JSON input.
+A web-based tool for comparing code versions with JSON input.
+
+## Features
+
+- Side-by-side code comparison with syntax highlighting
+- Markdown rendering for descriptions and feedback
+- Filter content by:
+  - Experiment
+  - Error type
+  - Model
+  - Problem
+  - Tags
+- Single and two-column view modes
+- Navigation between file versions
 
 ## Setup
 
@@ -9,48 +23,59 @@ A web-based tool for comparing file versions using JSON input.
 npm install
 ```
 
-2. Prepare your JSON file in the following format:
-```json
-{
-    "contents": [
-        {
-            "file_name": "example1.js",
-            "desc": "Description of the first version",
-            "code": "// Your code here"
-        },
-        {
-            "file_name": "example2.js",
-            "desc": "Description of changes made",
-            "code": "// Modified code here"
-        }
-        // ... more file versions ...
-    ]
-}
-```
-
-## Running the Service
-
-1. Start the development server:
+2. Start the server:
 ```bash
-npm run dev
+npm run dev    # Development mode with hot reload
+npm start      # Production mode
 ```
 
-2. Open your web browser and navigate to:
+3. Access the app at:
 ```
 http://localhost:3300
 ```
 
-## Usage
+## JSON Structure
 
-1. Click "Choose File" and select your JSON file
-2. Click "Display Diff" to start comparing
-3. Use "Previous" and "Next" buttons to navigate through file versions
-4. Each version shows:
-   - File name in the header
-   - Description of changes
-   - Code with highlighted differences
+Your input JSON should follow this format:
+
+```json
+{
+    "contents": {
+        "<id>": {
+            "id": "string",
+            "language": "string",
+            "solution": "string",
+            "name": "string",
+            "description": "markdown",
+            "fitness": "string",
+            "feedback": "markdown",
+            "error": "string",
+            "parent_id": "string",
+            "metadata": {
+                "error_type": "string",
+                "model": "string",
+                "prompt": "markdown",
+                "raw_response": "markdown",
+                "problem": "string",
+                "tags": ["string"]
+            }
+        }
+    },
+    "experiments": {
+        "<experiment_id>": {
+            "id": "string",
+            "name": "string",
+            "id_list": ["string"]
+        }
+    }
+}
+```
 
 ## Development
 
-- Run with debugger: `npm run dev`
-- Production mode: `npm start`
+- The server serves static files from the public directory
+- Supported file types: Java, JavaScript, Python
+- Uses the following libraries:
+  - [jsdiff](https://github.com/kpdecker/jsdiff) for code comparison
+  - [marked](https://github.com/markedjs/marked) for Markdown rendering
+  - [Prism](https://prismjs.com/) for syntax highlighting
