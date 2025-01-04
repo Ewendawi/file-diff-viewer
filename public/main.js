@@ -335,7 +335,8 @@ function populateFilterOptions() {
     });
 
     tagsFilterMenu.innerHTML = '';
-    tags.forEach(tag => {
+    sorted_tags = Array.from(tags).sort(Intl.Collator().compare);
+    sorted_tags.forEach(tag => {
         const label = document.createElement('label');
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
