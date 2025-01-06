@@ -141,7 +141,7 @@ button:disabled {
     margin-right: 10px;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown-content.active {
     display: block;
 }
 

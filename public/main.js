@@ -27,6 +27,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('applyFilters').addEventListener('click', applyFilters);
     document.getElementById('resetFilters').addEventListener('click', resetFilters); // Add event listener
+
+    const tagsFilterButton = document.getElementById('tagsFilterButton');
+    const tagsFilterMenu = document.getElementById('tagsFilterMenu');
+
+    tagsFilterButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        tagsFilterMenu.classList.toggle('active');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!tagsFilterMenu.contains(e.target) && !tagsFilterButton.contains(e.target)) {
+            tagsFilterMenu.classList.remove('active');
+        }
+    });
 });
 
 document.getElementById('jsonSelector').addEventListener('change', (event) => {
