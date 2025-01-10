@@ -65,18 +65,16 @@
             </div>
             <div class="file-description" id="file1Desc"></div> -->
             <div class="block-title">
-                <span>Raw Response</span>
-                <button class="fold-button" onclick="toggleFold('file1RawResponse')">▼</button>
-            </div>
-
-            <div class="file-raw-response" id="file1RawResponse"></div>
-            <div class="block-title">
                 <span>Prompt</span>
                 <button class="fold-button" onclick="toggleFold('file1Prompt')">▼</button>
             </div>
-            <div class="file-prompt" id="file1Prompt"></div>
 
-            
+            <div class="file-prompt" id="file1Prompt"></div>
+            <div class="block-title">
+                <span>Raw Response</span>
+                <button class="fold-button" onclick="toggleFold('file1RawResponse')">▼</button>
+            </div>
+            <div class="file-raw-response" id="file1RawResponse"></div>
         </div>
         <div class="diff-column">
 
@@ -98,17 +96,19 @@
             </div>
             <div class="file-description" id="file2Desc"></div> -->
             <div class="block-title">
+                <span>Prompt</span>
+                <button class="fold-button" onclick="toggleFold('file2Prompt')">▼</button>
+            </div>
+            <div class="file-prompt" id="file2Prompt"></div>
+
+            <div class="block-title">
                 <span>Raw Response</span>
                 <button class="fold-button" onclick="toggleFold('file2RawResponse')">▼</button>
             </div>
             <div class="file-raw-response" id="file2RawResponse">
             </div>
 
-            <div class="block-title">
-                <span>Prompt</span>
-                <button class="fold-button" onclick="toggleFold('file2Prompt')">▼</button>
-            </div>
-            <div class="file-prompt" id="file2Prompt"></div>
+            
         </div>
     </div>
     <div class="diff-container" id="oneColumnView"> <!-- New one-column view -->
@@ -131,12 +131,6 @@
                 <button class="fold-button" onclick="toggleFold('fileDesc')">▼</button>
             </div>
             <div class="file-description" id="fileDesc"></div> -->
-            <div class="block-title">
-                <span>Raw Response</span>
-                <button class="fold-button" onclick="toggleFold('fileRawResponse')">▼</button>
-            </div>
-            <div class="file-raw-response" id="fileRawResponse">
-
             </div>
             <div class="block-title">
                 <span>Prompt</span>
@@ -144,6 +138,12 @@
             </div>
             <div class="file-prompt" id="filePrompt">
             </div>
+            
+            <div class="block-title">
+                <span>Raw Response</span>
+                <button class="fold-button" onclick="toggleFold('fileRawResponse')">▼</button>
+            </div>
+            <div class="file-raw-response" id="fileRawResponse">
             
         </div>
     </div>
