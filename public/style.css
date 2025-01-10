@@ -178,7 +178,7 @@ button:disabled {
     align-items: stretch; /* Ensure the div stretches to the specified height */
 }
 
-.diff-column > .file-description,
+/* .diff-column > .file-description, */
 .diff-column > .file-feedback,
 .diff-column > .file-prompt,
 .diff-column > .file-raw-response {

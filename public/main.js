@@ -57,12 +57,15 @@ document.getElementById('jsonSelector').addEventListener('change', (event) => {
                 console.log('Loaded files:', Object.keys(fileContentMap).length);
                 populateFilterOptions();
 
+                
                 window.currentIndex = 0;
-                if (document.getElementById('twoColumnView').style.display !== 'none') {
-                    displayCurrentPair();
-                } else {
+                // if (document.getElementById('twoColumnView').style.display !== 'none') {
+                //     displayCurrentPair();
+                // } else {
+                    twoColumnView.style.display = 'none';
+                    oneColumnView.style.display = 'flex';
                     displayCurrentFile();
-                }
+                // }
                 updateFileContentsCount(); // Update count on load
             } catch (err) {
                 console.error('Error parsing JSON:', err);
@@ -166,8 +169,8 @@ function displayCurrentPair() {
     
     document.getElementById('file1Header').textContent = file1.name;
     document.getElementById('file2Header').textContent = file2.name;
-    document.getElementById('file1Desc').innerHTML = marked.parse(file1.description);
-    document.getElementById('file2Desc').innerHTML = marked.parse(file2.description);
+    // document.getElementById('file1Desc').innerHTML = marked.parse(file1.description);
+    // document.getElementById('file2Desc').innerHTML = marked.parse(file2.description);
     errer_str = file1.error ? `\n#### Error \n\`\`\`bash${file1.error}\`\`\`` : '';
     document.getElementById('file1Feedback').innerHTML = marked.parse(`${file1.feedback}${errer_str}`);
     errer_str = file2.error ? `\n#### Error \n\`\`\`bash${file2.error}\`\`\`` : '';
@@ -188,7 +191,7 @@ function displayCurrentFile() {
     }
 
     document.getElementById('fileHeader').textContent = file.name;
-    document.getElementById('fileDesc').innerHTML = marked.parse(file.description);
+    // document.getElementById('fileDesc').innerHTML = marked.parse(file.description);
     errer_str = file.error ? `\n#### Error \n\`\`\`bash${file.error}\`\`\`` : '';
     document.getElementById('fileFeedback').innerHTML = marked.parse(`${file.feedback}${errer_str}`);
     document.getElementById('filePrompt').innerHTML = marked.parse(file.metadata.prompt);
@@ -443,7 +446,7 @@ function setEqualHeight() {
     if (twoColumnView.style.display === 'none') return;
 
     const divPairs = [
-        ['file1Desc', 'file2Desc'],
+        // ['file1Desc', 'file2Desc'],
         ['file1Output', 'file2Output'],
         ['file1Feedback', 'file2Feedback'],
         ['file1Prompt', 'file2Prompt'],
