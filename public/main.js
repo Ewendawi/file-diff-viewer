@@ -232,24 +232,35 @@ function displayDiff(content1, content2) {
     let line1Num = 1;
     let line2Num = 1;
 
-    changes.forEach(hunk => {
-        hunk.lines.forEach(line => {
-            if (line[0] === ' ') {
-                // Unchanged line - add to both columns with same height
-                const lineContent = escapeHtml(line.slice(1));
-                lineBuffer1 += `<div class="line" data-line="${line1Num}">${createLineContent(line1Num++, lineContent)}</div>`;
-                lineBuffer2 += `<div class="line" data-line="${line2Num}">${createLineContent(line2Num++, lineContent)}</div>`;
-            } else if (line[0] === '-') {
-                // Removed line - add to left column and placeholder to right
-                lineBuffer1 += `<div class="line line-removed" data-line="${line1Num}">${createLineContent(line1Num++, escapeHtml(line.slice(1)), true)}</div>`;
-                lineBuffer2 += `<div class="line line-placeholder"></div>`;
-            } else if (line[0] === '+') {
-                // Added line - add placeholder to left and line to right
-                lineBuffer1 += `<div class="line line-placeholder"></div>`;
-                lineBuffer2 += `<div class="line line-added" data-line="${line2Num}">${createLineContent(line2Num++, escapeHtml(line.slice(1)), true)}</div>`;
-            }
+    if (changes.length == 0) {
+        const lines = content1.split('\n');
+        lines.forEach((line, index) => {
+            const lineNum = index + 1;
+            const lineContent = escapeHtml(line);
+            lineBuffer1 += `<div class="line" data-line="${lineNum}">${createLineContent(lineNum, lineContent)}</div>`;
+            lineBuffer2 += `<div class="line" data-line="${lineNum}">${createLineContent(lineNum, lineContent)}</div>`;
         });
-    });
+        // empty
+    } else {
+        changes.forEach(hunk => {
+            hunk.lines.forEach(line => {
+                if (line[0] === ' ') {
+                    // Unchanged line - add to both columns with same height
+                    const lineContent = escapeHtml(line.slice(1));
+                    lineBuffer1 += `<div class="line" data-line="${line1Num}">${createLineContent(line1Num++, lineContent)}</div>`;
+                    lineBuffer2 += `<div class="line" data-line="${line2Num}">${createLineContent(line2Num++, lineContent)}</div>`;
+                } else if (line[0] === '-') {
+                    // Removed line - add to left column and placeholder to right
+                    lineBuffer1 += `<div class="line line-removed" data-line="${line1Num}">${createLineContent(line1Num++, escapeHtml(line.slice(1)), true)}</div>`;
+                    lineBuffer2 += `<div class="line line-placeholder"></div>`;
+                } else if (line[0] === '+') {
+                    // Added line - add placeholder to left and line to right
+                    lineBuffer1 += `<div class="line line-placeholder"></div>`;
+                    lineBuffer2 += `<div class="line line-added" data-line="${line2Num}">${createLineContent(line2Num++, escapeHtml(line.slice(1)), true)}</div>`;
+                }
+            });
+        });
+    }
 
     file1Output.innerHTML = lineBuffer1;
     file2Output.innerHTML = lineBuffer2;
