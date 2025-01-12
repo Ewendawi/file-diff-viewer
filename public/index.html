@@ -46,16 +46,21 @@
     </div>
     <div class="diff-container" id="twoColumnView" style="display: none;"> 
         <div class="diff-column">
-
             <div class="block-title">
                 <span id="file1Header">Code</span>
-                <button class="fold-button" onclick="toggleFold('file1Output')">▼</button>
+                <div class="buttons">
+                    <button class="copy-button" onclick="copyContent('file1Output')">Copy</button>
+                    <button class="fold-button" onclick="toggleFold('file1Output')">▼</button>
+                </div>
             </div>
             <pre id="file1Output" class="diff-content"><code class="language-java"></code></pre>
 
             <div class="block-title">
                 <span>Feedback</span>
-                <button class="fold-button" onclick="toggleFold('file1Feedback')">▼</button>
+                <div class="buttons">
+                    <button class="copy-button" onclick="copyContent('file1Feedback')">Copy</button>
+                    <button class="fold-button" onclick="toggleFold('file1Feedback')">▼</button>
+                </div>
             </div>
             <div class="file-feedback" id="file1Feedback"></div>
 
@@ -66,13 +71,19 @@
             <div class="file-description" id="file1Desc"></div> -->
             <div class="block-title">
                 <span>Prompt</span>
-                <button class="fold-button" onclick="toggleFold('file1Prompt')">▼</button>
+                <div class="buttons">
+                    <button class="copy-button" onclick="copyContent('file1Prompt')">Copy</button>
+                    <button class="fold-button" onclick="toggleFold('file1Prompt')">▼</button>
+                </div>
             </div>
             <div class="file-prompt" id="file1Prompt"></div>
 
             <div class="block-title">
                 <span>Raw Response</span>
-                <button class="fold-button" onclick="toggleFold('file1RawResponse')">▼</button>
+                <div class="buttons">
+                    <button class="copy-button" onclick="copyContent('file1RawResponse')">Copy</button>
+                    <button class="fold-button" onclick="toggleFold('file1RawResponse')">▼</button>
+                </div>
             </div>
             <div class="file-raw-response" id="file1RawResponse"></div>
         </div>
@@ -81,13 +92,19 @@
 
             <div class="block-title">
                 <span id="file2Header">Code</span>
-                <button class="fold-button" onclick="toggleFold('file2Output')">▼</button>
+                <div class="buttons">
+                    <button class="copy-button" onclick="copyContent('file2Output')">Copy</button>
+                    <button class="fold-button" onclick="toggleFold('file2Output')">▼</button>
+                </div>
             </div>
             <pre id="file2Output" class="diff-content"><code class="language-java"></code></pre>
 
             <div class="block-title">
                 <span>Feedback</span>
-                <button class="fold-button" onclick="toggleFold('file2Feedback')">▼</button>
+                <div class="buttons">
+                    <button class="copy-button" onclick="copyContent('file2Feedback')">Copy</button>
+                    <button class="fold-button" onclick="toggleFold('file2Feedback')">▼</button>
+                </div>
             </div>
             <div class="file-feedback" id="file2Feedback"></div>
 
@@ -98,13 +115,19 @@
             <div class="file-description" id="file2Desc"></div> -->
             <div class="block-title">
                 <span>Prompt</span>
-                <button class="fold-button" onclick="toggleFold('file2Prompt')">▼</button>
+                <div class="buttons">
+                    <button class="copy-button" onclick="copyContent('file2Prompt')">Copy</button>
+                    <button class="fold-button" onclick="toggleFold('file2Prompt')">▼</button>
+                </div>
             </div>
             <div class="file-prompt" id="file2Prompt"></div>
 
             <div class="block-title">
                 <span>Raw Response</span>
-                <button class="fold-button" onclick="toggleFold('file2RawResponse')">▼</button>
+                <div class="buttons">
+                    <button class="copy-button" onclick="copyContent('file2RawResponse')">Copy</button>
+                    <button class="fold-button" onclick="toggleFold('file2RawResponse')">▼</button>
+                </div>
             </div>
             <div class="file-raw-response" id="file2RawResponse">
             </div>
@@ -116,13 +139,19 @@
 
             <div class="block-title">
                 <span id="fileHeader">Code</span>
-                <button class="fold-button" onclick="toggleFold('fileOutput')">▼</button>
+                <div class="buttons">
+                    <button class="copy-button" onclick="copyContent('fileOutput')">Copy</button>
+                    <button class="fold-button" onclick="toggleFold('fileOutput')">▼</button>
+                </div>
             </div>
             <pre id="fileOutput" class="diff-content"><code class="language-java"></code></pre>
 
             <div class="block-title">
                 <span>Feedback</span>
-                <button class="fold-button" onclick="toggleFold('fileFeedback')">▼</button>
+                <div class="buttons">
+                    <button class="copy-button" onclick="copyContent('fileFeedback')">Copy</button>
+                    <button class="fold-button" onclick="toggleFold('fileFeedback')">▼</button>
+                </div>
             </div>
             <div class="file-feedback" id="fileFeedback"></div>
 
@@ -133,14 +162,20 @@
             <div class="file-description" id="fileDesc"></div> -->
             <div class="block-title">
                 <span>Prompt</span>
-                <button class="fold-button" onclick="toggleFold('filePrompt')">▼</button>
+                <div class="buttons">
+                    <button class="copy-button" onclick="copyContent('filePrompt')">Copy</button>
+                    <button class="fold-button" onclick="toggleFold('filePrompt')">▼</button>
+                </div>
             </div>
             <div class="file-prompt" id="filePrompt">
             </div>
             
             <div class="block-title">
                 <span>Raw Response</span>
-                <button class="fold-button" onclick="toggleFold('fileRawResponse')">▼</button>
+                <div class="buttons">
+                    <button class="copy-button" onclick="copyContent('fileRawResponse')">Copy</button>
+                    <button class="fold-button" onclick="toggleFold('fileRawResponse')">▼</button>
+                </div>
             </div>
             <div class="file-raw-response" id="fileRawResponse"></div>
             

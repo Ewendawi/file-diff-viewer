@@ -40,6 +40,29 @@ button:disabled {
     Bar
     =============== */
 
+.block-title .buttons {
+    margin-left: auto;
+    display: flex;
+    gap: 5px;
+}
+
+.copy-button {
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px 8px;
+    color: #666;
+}
+
+.copy-button:hover {
+    color: #000;
+}
+
+.copy-button:focus {
+    outline: none;
+}
+
 .filter-bar {
     position: sticky;
     top: 0;
@@ -222,7 +245,7 @@ button:disabled {
     border-radius: 4px;
 }
 
-#oneColumnView .diff-content {
+/* #oneColumnView .diff-content {
     margin: 0;
     padding: 10px;
     background-color: #fff;
@@ -232,7 +255,7 @@ button:disabled {
     overflow-x: hidden;
     font-family: monospace;
     position: relative;
-}
+} */
 
 
 /* =========================

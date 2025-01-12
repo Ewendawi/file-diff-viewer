@@ -110,6 +110,53 @@ document.getElementById('prevPair').addEventListener('click', () => {
     }
 });
 
+function copyContent(elementId) {
+    const element = document.getElementById(elementId);
+    let textToCopy;
+    
+    const elements = element.classList[0].split('-');
+    const name = elements.slice(1).join('-');
+
+    if (name === 'prompt' || name === 'raw-response' || name === 'content') {
+        const twoColumnView = document.getElementById('twoColumnView');
+        let file = null;
+        if (twoColumnView.style.display !== 'none') {
+            const file1 = fileContents[window.currentIndex];
+            const file2 = fileContents[window.currentIndex + 1];
+            file = file2;
+            if (element.id.includes('file1')) {
+                file = file1;
+            }
+        } else {
+            file = fileContents[window.currentIndex];
+        }
+        if (name === 'prompt') {
+            textToCopy = file.metadata.prompt;
+        } else if (name === 'raw-response') {
+            textToCopy = file.metadata.raw_response;
+        } else if (name === 'content') {
+            textToCopy = file.solution;
+        }
+    } else {
+        textToCopy = element.textContent;
+    }
+
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        const copyBtn = element.previousElementSibling.querySelector('.copy-button');
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+            copyBtn.textContent = originalText;
+        }, 2000);
+    }).catch(err => {
+        copyBtn.textContent = 'Failed to copy';
+        setTimeout(() => {
+            copyBtn.textContent = originalText;
+        }, 2000);
+        console.error('Failed to copy text:', err);
+    });
+}
+
 function updateNavigationButtons() {
     const prevButton = document.getElementById('prevPair');
     const nextButton = document.getElementById('nextPair');
@@ -198,7 +245,7 @@ function displayCurrentFile() {
     document.getElementById('fileRawResponse').innerHTML = marked.parse(file.metadata.raw_response);
     const fileOutput = document.getElementById('fileOutput');
     fileOutput.textContent = file.solution;
-    fileOutput.className = `language-${file.language || getFileLanguage(file.name)}`;
+    fileOutput.className += ` language-${file.language || getFileLanguage(file.name)}`;
     Prism.highlightElement(fileOutput);
     updateNavigationButtons();
 }
