@@ -29,7 +29,7 @@ const server = http.createServer((req, res) => {
         serveFile(`public/default-content/${fileName}`, 'application/json', res);
     } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('Not Found');
+        res.end('Not Found' + req.url);
     }
 });
 
