@@ -12,6 +12,21 @@ const server = http.createServer((req, res) => {
         serveFile('public/main.js', 'application/javascript', res);
     } else if (req.url === '/default-content.json') {
         serveFile('public/default-content.json', 'application/json', res);
+    } else if (req.url === '/api/default-content-list') {
+        fs.readdir(path.join(__dirname, '..', 'public/default-content'), (err, files) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Failed to read directory' }));
+                return;
+            }
+            // Filter only .json files
+            const jsonFiles = files.filter(file => file.endsWith('.json'));
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ files: jsonFiles }));
+        });
+    } else if (req.url.startsWith('/default-content/')) {
+        const fileName = req.url.split('/').pop();
+        serveFile(`public/default-content/${fileName}`, 'application/json', res);
     } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('Not Found');

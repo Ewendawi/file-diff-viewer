@@ -3,27 +3,27 @@ let fileContentMap = {};
 let experimentMap = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('/default-content.json')
-        .then(response => response.json())
-        .then(data => {
-            fileContentMap = data.contents;
-            experimentMap = data.experiments;
-            fileContents = Object.values(fileContentMap);
-            console.log('Loaded default files:', Object.keys(fileContentMap).length);
-            window.currentIndex = 0;
+    // fetch('/default-content.json')
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         fileContentMap = data.contents;
+    //         experimentMap = data.experiments;
+    //         fileContents = Object.values(fileContentMap);
+    //         console.log('Loaded default files:', Object.keys(fileContentMap).length);
+    //         window.currentIndex = 0;
 
-            // //#TEST
-            // document.getElementById('twoColumnView').style.display = 'flex';
-            // document.getElementById('oneColumnView').style.display = 'none';
-            // displayCurrentPair();
+    //         // //#TEST
+    //         // document.getElementById('twoColumnView').style.display = 'flex';
+    //         // document.getElementById('oneColumnView').style.display = 'none';
+    //         // displayCurrentPair();
 
-            displayCurrentFile();
-            populateFilterOptions();
-            updateFileContentsCount(); // Update count on load
-        })
-        .catch(err => {
-            console.error('Error loading default content:', err);
-        });
+    //         displayCurrentFile();
+    //         populateFilterOptions();
+    //         updateFileContentsCount(); // Update count on load
+    //     })
+    //     .catch(err => {
+    //         console.error('Error loading default content:', err);
+    //     });
 
     document.getElementById('applyFilters').addEventListener('click', applyFilters);
     document.getElementById('resetFilters').addEventListener('click', resetFilters); // Add event listener
@@ -36,12 +36,25 @@ document.addEventListener('DOMContentLoaded', () => {
         tagsFilterMenu.classList.toggle('active');
     });
 
+    const defaultContentButton = document.getElementById('defaultContentButton');
+    const defaultContentMenu = document.getElementById('defaultContentMenu');
+
+    defaultContentButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        defaultContentMenu.classList.toggle('active');
+    });
+
     // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
         if (!tagsFilterMenu.contains(e.target) && !tagsFilterButton.contains(e.target)) {
             tagsFilterMenu.classList.remove('active');
         }
+
+        if (!defaultContentMenu.contains(e.target) && !defaultContentButton.contains(e.target)) {
+            defaultContentMenu.classList.remove('active');
+        }
     });
+    populateDefaultContentMenu(); 
 });
 
 document.getElementById('jsonSelector').addEventListener('change', (event) => {
@@ -109,6 +122,71 @@ document.getElementById('prevPair').addEventListener('click', () => {
         }
     }
 });
+
+function loadDefaultContent(fileName) {
+    // Reset filters when loading new content
+    document.getElementById('experimentFilter').value = '';
+    document.getElementById('errorTypeFilter').value = '';
+    document.getElementById('modelFilter').value = '';
+    document.getElementById('problemFilter').value = '';
+    document.querySelectorAll('#tagsFilterMenu input:checked')
+        .forEach(checkbox => checkbox.checked = false);
+        
+    fetch(`/default-content/${fileName}`)
+        .then(response => response.json())
+        .then(data => {
+            fileContentMap = data.contents;
+            experimentMap = data.experiments;
+            fileContents = Object.values(fileContentMap);
+            console.log('Loaded default files:', Object.keys(fileContentMap).length);
+            window.currentIndex = 0;
+            
+            twoColumnView.style.display = 'none';
+            oneColumnView.style.display = 'flex';
+            displayCurrentFile();
+            populateFilterOptions();
+            updateFileContentsCount();
+        })
+        .catch(err => {
+            console.error('Error loading default content:', err);
+            alert('Failed to load default content');
+        });
+}
+
+function populateDefaultContentMenu() {
+    const menu = document.getElementById('defaultContentMenu');
+    const button = document.getElementById('defaultContentButton');
+    const originalText = button.textContent;
+    
+    button.textContent = 'Loading...';
+    button.disabled = true;
+    
+    fetch('/api/default-content-list')
+        .then(response => response.json())
+        .then(data => {
+            menu.innerHTML = '<ul class="file-list"></ul>';
+            const fileList = menu.querySelector('.file-list');
+            
+            data.files.forEach(file => {
+                const li = document.createElement('li');
+                li.textContent = file;
+                li.classList.add('file-item');
+                li.onclick = () => {
+                    loadDefaultContent(file);
+                    menu.classList.remove('active');
+                };
+                fileList.appendChild(li);
+            });
+        })
+        .catch(err => {
+            console.error('Error loading default content list:', err);
+            menu.innerHTML = '<button disabled>Error loading files</button>';
+        })
+        .finally(() => {
+            button.textContent = originalText;
+            button.disabled = false;
+        });
+}
 
 function copyContent(elementId) {
     const element = document.getElementById(elementId);

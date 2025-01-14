@@ -40,6 +40,57 @@ button:disabled {
     Bar
     =============== */
 
+.default-content-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.default-content-button {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.default-content-menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 300px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.default-content-menu.active {
+    display: block;
+}
+
+.file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.file-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.file-item:hover {
+    background-color: #f0f0f0;
+}
+
+.file-item.error {
+    color: #ff0000;
+    cursor: not-allowed;
+}
+
+
 .block-title .buttons {
     margin-left: auto;
     display: flex;
@@ -72,7 +123,7 @@ button:disabled {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 10px;
     margin-bottom: 20px;
 }
 
@@ -88,18 +139,30 @@ button:disabled {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 13px;
     background-color: white;
-    max-width: 120px;
+    max-width: 130px;
     cursor: pointer;
 }
 
 .filter-bar input[type="file"] {
-    max-width: 200px;
+    max-width: 180px;
+}
+
+#defaultContentButton,
+#tagsFilterButton  {
+    background-color: white;
+    color: black;
+    max-width: 140px;
+}
+
+#defaultContentButton:hover,
+#tagsFilterButton:hover {
+    background-color: white;
 }
 
 .filter-bar select {
-    max-width: 160px;
+    max-width: 140px;
 }
 
 .filter-bar button {
@@ -121,6 +184,7 @@ button:disabled {
 #fileContentsCount {
     margin-left: auto;
     font-weight: bold;
+    font-size: 14px;
 }
 
 #dirSelector {

@@ -11,6 +11,12 @@
         <!-- File selector and navigation controls -->
         <div class="controls-group">
             <input type="file" id="jsonSelector" accept=".json" />
+            <div class="default-content-dropdown">
+                <button class="default-content-button" id="defaultContentButton">Default Content</button>
+                <div id="defaultContentMenu" class="default-content-menu">
+                    <!-- Options will be added dynamically -->
+                </div>
+            </div>
             <button id="prevPair">Previous</button>
             <button id="nextPair">Next</button>
             <span id="fileContentsCount">Files: 0</span>
