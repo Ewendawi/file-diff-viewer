@@ -157,35 +157,57 @@ function populateDefaultContentMenu() {
     const menu = document.getElementById('defaultContentMenu');
     const button = document.getElementById('defaultContentButton');
     const originalText = button.textContent;
+
+    files = [
+        'default-content.json',
+        'exp_p1_0107224220.json',
+        'bbob_simple_100_0114130652.json',
+        'bbob_100_0114125701.json',
+    ];
+
+    menu.innerHTML = '<ul class="file-list"></ul>';
+    const fileList = menu.querySelector('.file-list');
     
-    button.textContent = 'Loading...';
-    button.disabled = true;
+    files.forEach(file => {
+        const li = document.createElement('li');
+        li.textContent = file;
+        li.classList.add('file-item');
+        li.onclick = () => {
+            loadDefaultContent(file);
+            menu.classList.remove('active');
+        };
+        fileList.appendChild(li);
+    });
+
     
-    fetch('/api/default-content-list')
-        .then(response => response.json())
-        .then(data => {
-            menu.innerHTML = '<ul class="file-list"></ul>';
-            const fileList = menu.querySelector('.file-list');
+    // button.textContent = 'Loading...';
+    // button.disabled = true;
+    
+    // fetch('/api/default-content-list')
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         menu.innerHTML = '<ul class="file-list"></ul>';
+    //         const fileList = menu.querySelector('.file-list');
             
-            data.files.forEach(file => {
-                const li = document.createElement('li');
-                li.textContent = file;
-                li.classList.add('file-item');
-                li.onclick = () => {
-                    loadDefaultContent(file);
-                    menu.classList.remove('active');
-                };
-                fileList.appendChild(li);
-            });
-        })
-        .catch(err => {
-            console.error('Error loading default content list:', err);
-            menu.innerHTML = '<button disabled>Error loading files</button>';
-        })
-        .finally(() => {
-            button.textContent = originalText;
-            button.disabled = false;
-        });
+    //         data.files.forEach(file => {
+    //             const li = document.createElement('li');
+    //             li.textContent = file;
+    //             li.classList.add('file-item');
+    //             li.onclick = () => {
+    //                 loadDefaultContent(file);
+    //                 menu.classList.remove('active');
+    //             };
+    //             fileList.appendChild(li);
+    //         });
+    //     })
+    //     .catch(err => {
+    //         console.error('Error loading default content list:', err);
+    //         menu.innerHTML = '<button disabled>Error loading files</button>';
+    //     })
+    //     .finally(() => {
+    //         button.textContent = originalText;
+    //         button.disabled = false;
+    //     });
 }
 
 function copyContent(elementId) {
