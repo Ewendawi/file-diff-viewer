@@ -159,6 +159,9 @@ function populateDefaultContentMenu() {
     const originalText = button.textContent;
 
     files = [
+        'best_ea.json',
+        'best_bo_sk.json',
+        'best_gpytorch.json',
         'default-content.json',
         'exp_p1_0107224220.json',
         'bbob_simple_100_0114130652.json',
@@ -316,16 +319,27 @@ function displayCurrentPair() {
     
     document.getElementById('file1Header').textContent = file1.name;
     document.getElementById('file2Header').textContent = file2.name;
+
+    document.getElementById('file1Feedback').textContent = file1.feedback;
+    document.getElementById('file2Feedback').textContent = file2.feedback;
+    // document.getElementById('file1Desc').textContent = file1.description;
+    // document.getElementById('file2Desc').textContent = file2.description;
+    document.getElementById('file1Prompt').textContent = file1.metadata.prompt;
+    document.getElementById('file2Prompt').textContent = file2.metadata.prompt;
+    document.getElementById('file1RawResponse').textContent = file1.metadata.raw_response;
+    document.getElementById('file2RawResponse').textContent = file2.metadata.raw
+
+
     // document.getElementById('file1Desc').innerHTML = marked.parse(file1.description);
     // document.getElementById('file2Desc').innerHTML = marked.parse(file2.description);
-    errer_str = file1.error ? `\n#### Error \n\`\`\`bash${file1.error}\`\`\`` : '';
-    document.getElementById('file1Feedback').innerHTML = marked.parse(`${file1.feedback}${errer_str}`);
-    errer_str = file2.error ? `\n#### Error \n\`\`\`bash${file2.error}\`\`\`` : '';
-    document.getElementById('file2Feedback').innerHTML = marked.parse(`${file2.feedback}${errer_str}`);
-    document.getElementById('file1Prompt').innerHTML = marked.parse(file1.metadata.prompt);
-    document.getElementById('file2Prompt').innerHTML = marked.parse(file2.metadata.prompt);
-    document.getElementById('file1RawResponse').innerHTML = marked.parse(file1.metadata.raw_response);
-    document.getElementById('file2RawResponse').innerHTML = marked.parse(file2.metadata.raw_response);
+    // errer_str = file1.error ? `\n#### Error \n\`\`\`bash${file1.error}\`\`\`` : '';
+    // document.getElementById('file1Feedback').innerHTML = marked.parse(`${file1.feedback}${errer_str}`);
+    // errer_str = file2.error ? `\n#### Error \n\`\`\`bash${file2.error}\`\`\`` : '';
+    // document.getElementById('file2Feedback').innerHTML = marked.parse(`${file2.feedback}${errer_str}`);
+    // document.getElementById('file1Prompt').innerHTML = marked.parse(file1.metadata.prompt);
+    // document.getElementById('file2Prompt').innerHTML = marked.parse(file2.metadata.prompt);
+    // document.getElementById('file1RawResponse').innerHTML = marked.parse(file1.metadata.raw_response);
+    // document.getElementById('file2RawResponse').innerHTML = marked.parse(file2.metadata.raw_response);
     compareContents(file1.solution, file2.solution);
     updateNavigationButtons();
     setTimeout(setEqualHeight, 0); // Set equal height after displaying the current pair
@@ -338,11 +352,16 @@ function displayCurrentFile() {
     }
 
     document.getElementById('fileHeader').textContent = file.name;
+    // document.getElementById('fileFeedback').textContent = file.feedback;
+    // document.getElementById('fileDesc').textContent = file.description;
+    // document.getElementById('filePrompt').textContent = file.metadata.prompt;
+    document.getElementById('fileRawResponse').textContent = file.metadata.raw_response;
+
     // document.getElementById('fileDesc').innerHTML = marked.parse(file.description);
     errer_str = file.error ? `\n#### Error \n\`\`\`bash${file.error}\`\`\`` : '';
     document.getElementById('fileFeedback').innerHTML = marked.parse(`${file.feedback}${errer_str}`);
     document.getElementById('filePrompt').innerHTML = marked.parse(file.metadata.prompt);
-    document.getElementById('fileRawResponse').innerHTML = marked.parse(file.metadata.raw_response);
+    // document.getElementById('fileRawResponse').innerHTML = marked.parse(file.metadata.raw_response);
     const fileOutput = document.getElementById('fileOutput');
     fileOutput.textContent = file.solution;
     fileOutput.className += ` language-${file.language || getFileLanguage(file.name)}`;
